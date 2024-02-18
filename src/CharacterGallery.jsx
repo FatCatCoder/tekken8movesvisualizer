@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useContext } from 'preact/hooks';
 import { Store, StoreContext } from './StoreContext';
 
 export function CharacterGalleryV2() {
+  const GlobalStore = useContext(StoreContext);
   return (
     <>
       <div class="bg-white py-6 sm:py-8 lg:py-12">
@@ -11,10 +12,10 @@ export function CharacterGalleryV2() {
           </h2>
 
           <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-            {[...Array(32).keys()].map((x) => {
+            {GlobalStore.characterData.map((x) => {
               return (
                 <>
-                  <CharacterGalleryItemV2 />
+                  <CharacterGalleryItemV2 characterData={x} />
                 </>
               );
             })}
@@ -25,7 +26,7 @@ export function CharacterGalleryV2() {
   );
 }
 
-export function CharacterGalleryItemV2() {
+export function CharacterGalleryItemV2({characterData}) {
   return (
     <>
       <div class="shadow-xl">
@@ -42,7 +43,7 @@ export function CharacterGalleryItemV2() {
 
           <div class="relative flex w-full flex-col rounded-lg p-4 text-center backdrop-blur-sm">
             {/* <span class="text-gray-500">Men</span> */}
-            <span class="text-lg font-bold lg:text-xl">Jun Kazama</span>
+            <span class="text-lg font-bold lg:text-xl">{characterData.name}</span>
           </div>
         </a>
       </div>
