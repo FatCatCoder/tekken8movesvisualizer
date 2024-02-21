@@ -52,7 +52,8 @@ export function ComboVisual({ input }) {
           {images.map((x, index) => (
             <>
               <div className="mx-1">
-                <SVG src={x} />
+                {console.log(x)}
+                <SVG src={x.replace("./", window.location.origin + "/")} />
               </div>
             </>
           ))}

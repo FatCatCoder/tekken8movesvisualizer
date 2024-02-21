@@ -907,6 +907,10 @@ export const Store = {
       name: 'zafina',
       portaraitImg: 'zafina-fighter-select.webp',
     },
-  ]
+  ],
+  characterMoves: {
+    
+  }
 };
+
 export const StoreContext = createContext(Store);
