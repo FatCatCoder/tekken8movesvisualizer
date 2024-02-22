@@ -27,11 +27,12 @@ export function CharacterGalleryV2() {
 }
 
 export function CharacterGalleryItemV2({characterData}) {
+  const GlobalStore = useContext(StoreContext);
   return (
     <>
-      <div class="shadow-xl">
+      <div class="shadow-xl" onClick={() => GlobalStore.setCurrPage("/chars/" + characterData.name)}>
         <a
-          href="#"
+          onClick={() => GlobalStore.setCurrPage("/chars/" + characterData.name)}
           class="group relative flex h-96 items-end overflow-hidden rounded-lg bg-gray-100 p-4 shadow-lg"
         >
           <img

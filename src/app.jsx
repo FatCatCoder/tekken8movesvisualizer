@@ -6,6 +6,7 @@ import { CharacterGallery, CharacterGalleryV2, CharacterGalleryV3 } from './Char
 import { ComboList } from './ComboList';
 import {ComboVisual } from './ComboVisual'
 import './app.css';
+import characterMoves from './moves.json'
 
 // export const URLMonitor = () => {
 //   const [currentUrl, setCurrentUrl] = useState(window.location.href);
@@ -36,8 +37,12 @@ export function App() {
   const GlobalStore = useContext(StoreContext);
   const [isDarkMode, setIsDarkMode] = useState(GlobalStore.isDarkMode);
   const [currLocation, setCurrLocation] = useState(window.location);
-  const [currPage, setCurrPage] = useState(window.location.pathname);
+  const [currPage, setCurrPage] = useState(GlobalStore.currPage);
   const [pageContent, SetPageContent] = useState(window.location.pathname);
+
+  const [characterData] = useState(GlobalStore.characterData);
+
+  // console.log(characterMoves)
 
   useEffect(() => {
     console.log('init')
@@ -48,19 +53,6 @@ export function App() {
 
     // Add event listener to listen for changes in the URL
     window.addEventListener('popstate', handleUrlChange);
-
-    if(window.location.pathname == '' || window.location.pathname == "/"){
-      content = <></>;
-    }
-    else if(window.location.pathname.includes('/chars')){
-      if(window.location.pathname == '/chars')
-        content = <CharacterGalleryV2 />;
-      else
-        content = <ComboList comboList={GlobalStore.characterData.find(x => x.name == 'jun').moves} />;
-    }
-    else{
-      content = <><h2>404: Not Found</h2></>;
-    }
 
     return () => {
       // Cleanup function to remove the event listener when component unmounts
@@ -82,13 +74,17 @@ export function App() {
       if(currPage == '/chars')
         content = <CharacterGalleryV2 />;
       else
-        content = <ComboList comboList={GlobalStore.characterData.find(x => x.name == 'jun').moves} />;
+      {
+        console.log('useeffect page change')
+        content = <ComboList comboList={characterMoves[currPage.split("/chars/")[1]]} fighterName={currPage.split("/chars/")[1]} />;
+      }
+        
     }
     else{
       content = <><h2>404: Not Found</h2></>;
     }
 
-  }, [currLocation, currPage]); // Empty dependency array ensures this effect runs only once after initial render
+  }, [currLocation, currPage, GlobalStore.currPage]); // Empty dependency array ensures this effect runs only once after initial render
 
 
   if(currPage == '' || currPage == "/"){
@@ -98,14 +94,19 @@ export function App() {
     if(currPage == '/chars')
       content = <CharacterGalleryV2 />;
     else
-      content = <ComboList comboList={GlobalStore.characterData.find(x => x.name == 'jun').moves} />;
+    {
+      // console.log(characterMoves)
+      // console.log(characterMoves["Jun"])
+      content = <ComboList comboList={characterMoves[currPage.split("/chars/")[1]]} fighterName={currPage.split("/chars/")[1]} />;
+    } 
   }
   else{
     content = <><h2>404: Not Found</h2></>;
   }
+
   return (
     <>
-      <StoreContext.Provider value={GlobalStore}>
+      <StoreContext.Provider value={{isDarkMode, setIsDarkMode, currPage, setCurrPage, characterData}}>
         <div
           // className="App h-full py-6 px-6 bg-white"
           style="width: 100vw; height: 100vh; max-width: 100vw; min-width: 100vw;"

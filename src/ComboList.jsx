@@ -1,12 +1,16 @@
 import { ComboVisual } from './ComboVisual'
+import { Store, StoreContext } from './StoreContext';
+import { useEffect, useState, useRef, useContext } from 'preact/hooks';
 
-export function ComboList({ comboList }) {
+export function ComboList({ comboList, fighterName }) {
+  const GlobalStore = useContext(StoreContext);
+  const fighter = GlobalStore.characterData.find(x => x.name.includes(fighterName))
     return (
       <>
         <div class="container flex flex-col items-center justify-center w-full mx-auto">
           <div class="w-full px-4 py-5 mb-2 border rounded-md shadow sm:px-6">
             <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
-              Jun Kazama Combo Database
+              {fighterName} Combo Database {fighter.name}
             </h3>
             <p class="max-w-2xl mt-1 text-sm text-gray-500 dark:text-gray-200">
               Details and information about Jun's Strings.
@@ -16,7 +20,7 @@ export function ComboList({ comboList }) {
             {comboList.map((x) => {
               return (
                 <>
-                  <ComboListItem combo={x} />
+                  <ComboListItem combo={x} fighter={fighter} />
                 </>
               );
             })}
@@ -28,7 +32,7 @@ export function ComboList({ comboList }) {
 
   
 
-export function ComboListItem({ combo }) {
+export function ComboListItem({ combo, fighter }) {
     return (
       <li class="flex flex-row mb-2 border-gray-400">
         <div class="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
@@ -36,7 +40,7 @@ export function ComboListItem({ combo }) {
             <a href="#" class="relative block">
               <img
                 alt="profil"
-                src="https://static.bandainamcoent.eu/high/tekken/tekken-8/02-characters/new-gallery/Wide/Jun-Kazama_new.png"
+                src={window.location.protocol + "//" + window.location.host + "/img/character_arts/" + fighter.portaraitImg}
                 class="mx-auto object-cover rounded-full h-10 w-10 "
               />
             </a>
