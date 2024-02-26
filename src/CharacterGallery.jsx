@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useContext } from 'preact/hooks';
 import { Store, StoreContext } from './StoreContext';
+import characterMoves from './moves.json'
 
 export function CharacterGalleryV2() {
   const GlobalStore = useContext(StoreContext);
@@ -28,21 +29,23 @@ export function CharacterGalleryV2() {
 
 export function CharacterGalleryItemV2({characterData}) {
   const GlobalStore = useContext(StoreContext);
+  const hasMoves = characterMoves[characterData.name] != null;
+
   return (
     <>
-      <div class="shadow-xl" onClick={() => GlobalStore.setCurrPage("/chars/" + characterData.name)}>
+      <div class="shadow-xl" onClick={() => hasMoves? GlobalStore.setCurrPage("/chars/" + characterData.name): null} style={hasMoves? "": "filter: grayscale(.95);"}>
         <a
-          onClick={() => GlobalStore.setCurrPage("/chars/" + characterData.name)}
+          onClick={() => hasMoves? GlobalStore.setCurrPage("/chars/" + characterData.name): null}
           class="group relative flex h-96 items-end overflow-hidden rounded-lg bg-gray-100 p-4 shadow-lg"
         >
           <img
-            src={"./img/character_arts/" + characterData.portaraitImg}
+            src={window.location.protocol + "//" + window.location.host + "/img/character_arts/" + characterData.portaraitImg}
             loading="lazy"
             alt="Photo by Austin Wade"
             class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
           />
 
-          <div class="relative flex w-full flex-col rounded-lg p-4 text-center backdrop-blur-sm">
+          <div class="relative flex w-full flex-col rounded-lg p-4 text-center bg-white text-black">
             {/* <span class="text-gray-500">Men</span> */}
             <span class="text-lg font-bold lg:text-xl">{characterData.name}</span>
           </div>
