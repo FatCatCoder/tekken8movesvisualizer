@@ -39,9 +39,9 @@ export function CharacterGalleryItemV2({characterData}) {
           class="group relative flex h-96 items-end overflow-hidden rounded-lg bg-gray-100 p-4 shadow-lg"
         >
           <img
-            src={window.location.protocol + "//" + window.location.host + "/img/character_arts/" + characterData.portaraitImg}
+            src={window.location.protocol + "//" + window.location.host + "/tekken8movesvisualizer/img/character_arts/" + characterData.portaraitImg}
             loading="lazy"
-            alt="Photo by Austin Wade"
+            alt={"Photo img of " + characterData.name}
             class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
           />
 

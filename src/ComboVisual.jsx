@@ -53,7 +53,7 @@ export function ComboVisual({ input }) {
             <>
               <div className="mx-1">
                 {console.log(x)}
-                <SVG src={x.replace("./", window.location.origin + "/")} />
+                <SVG src={x.replace("./", window.location.origin + "/tekken8movesvisualizer/")} />
               </div>
             </>
           ))}

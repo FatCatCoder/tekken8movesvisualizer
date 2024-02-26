@@ -8,30 +8,6 @@ import './app.css';
 import characterMoves from './moves.json'
 import { ComboInput } from './ComboInput.jsx';
 
-// export const URLMonitor = () => {
-//   const [currentUrl, setCurrentUrl] = useState(window.location.href);
-
-//   useEffect(() => {
-//     const handleUrlChange = () => {
-//       setCurrentUrl(window.location.href);
-//     };
-
-//     // Add event listener to listen for changes in the URL
-//     window.addEventListener('popstate', handleUrlChange);
-
-//     return () => {
-//       // Cleanup function to remove the event listener when component unmounts
-//       window.removeEventListener('popstate', handleUrlChange);
-//     };
-//   }, []); // Empty dependency array ensures this effect runs only once after initial render
-
-//   return (
-//     <div>
-//       <p>Current URL: {currentUrl}</p>
-//     </div>
-//   );
-// };
-
 var content = <></>;
 export function App() {
   
@@ -45,7 +21,9 @@ export function App() {
   const [showModal, setShowModal] = useState(false);
 
 
-  function SetPageContentFromUrl(url){
+  function SetPageContentFromUrl(setUrl){
+    let url = setUrl.replace("/tekken8movesvisualizer")
+
     if(url == '' || url == "/"){
       content = <></>;
     }
@@ -80,7 +58,7 @@ export function App() {
     // window.addEventListener('popstate', () => console.log("yeah popstate works..."));
 
     return () => {
-      console.log('run cleanup')
+      //console.log('run cleanup')
       // Cleanup function to remove the event listener when component unmounts
       window.removeEventListener('popstate', handleUrlChange);
     };
@@ -88,7 +66,7 @@ export function App() {
 
 
   useEffect(() => {
-    console.log('location was changed: ' , currPage)
+    //console.log('location was changed: ' , currPage)
 
     //history.pushState({}, "Tekken 8 Moves", currPage);
 
